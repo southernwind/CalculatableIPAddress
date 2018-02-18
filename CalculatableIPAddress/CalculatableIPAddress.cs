@@ -44,6 +44,17 @@ namespace SandBeige {
 			return leftReverseUintIp != rightReverseUintIp;
 		}
 
+		public static bool operator >=(CalculatableIPAddress left, CalculatableIPAddress right) {
+			var leftReverseUintIp = BitConverter.ToUInt32(left.GetAddressBytes().Reverse().ToArray(), 0);
+			var rightReverseUintIp = BitConverter.ToUInt32(right.GetAddressBytes().Reverse().ToArray(), 0);
+			return leftReverseUintIp >= rightReverseUintIp;
+		}
+		public static bool operator <=(CalculatableIPAddress left, CalculatableIPAddress right) {
+			var leftReverseUintIp = BitConverter.ToUInt32(left.GetAddressBytes().Reverse().ToArray(), 0);
+			var rightReverseUintIp = BitConverter.ToUInt32(right.GetAddressBytes().Reverse().ToArray(), 0);
+			return leftReverseUintIp <= rightReverseUintIp;
+		}
+
 		public static CalculatableIPAddress operator &(CalculatableIPAddress address, CalculatableIPAddress mask) {
 			var byteArrayIp = address.GetAddressBytes();
 			var byteArrayMask = mask.GetAddressBytes();
@@ -87,6 +98,14 @@ namespace SandBeige {
 		public static CalculatableIPAddress operator --(CalculatableIPAddress address) {
 			return address - 1;
 		}
+
+		public static long operator -(CalculatableIPAddress left, CalculatableIPAddress right) {
+			var leftReverseUintIp = BitConverter.ToUInt32(left.GetAddressBytes().Reverse().ToArray(), 0);
+			var rightReverseUintIp = BitConverter.ToUInt32(right.GetAddressBytes().Reverse().ToArray(), 0);
+
+			return (long)leftReverseUintIp - rightReverseUintIp;
+		}
+
 
 		public override string ToString() {
 			return base.ToString();

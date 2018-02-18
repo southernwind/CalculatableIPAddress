@@ -51,6 +51,35 @@ namespace SandBeige {
 			}
 		}
 
+
+		/// <summary>
+		/// - Test
+		/// </summary>
+		/// <param name="sourceArg"></param>
+		/// <param name="right"></param>
+		/// <param name="resultArg"></param>
+		[TestCase(new byte[] { 10, 0, 0, 1 }, new byte[] { 10, 0, 0, 0 }, 1)]
+		[TestCase(new byte[] { 10, 0, 0, 2 }, new byte[] { 10, 0, 0, 0 }, 2)]
+		[TestCase(new byte[] { 10, 0, 0, 3 }, new byte[] { 10, 0, 0, 0 }, 3)]
+		[TestCase(new byte[] { 10, 0, 0, 4 }, new byte[] { 10, 0, 0, 0 }, 4)]
+		[TestCase(new byte[] { 10, 0, 1, 0 }, new byte[] { 10, 0, 0, 255 }, 1)]
+		[TestCase(new byte[] { 10, 1, 0, 0 }, new byte[] { 10, 0, 255, 255 }, 1)]
+		[TestCase(new byte[] { 11, 0, 0, 0 }, new byte[] { 10, 255, 255, 255 }, 1)]
+		[TestCase(new byte[] { 0, 0, 0, 0 }, new byte[] { 255, 255, 255, 255 }, -uint.MaxValue)]
+		[TestCase(new byte[] { 10, 0, 0, 0 }, new byte[] { 10, 0, 0, 1 }, -1)]
+		[TestCase(new byte[] { 10, 0, 0, 0 }, new byte[] { 10, 0, 0, 2 }, -2)]
+		[TestCase(new byte[] { 10, 0, 0, 0 }, new byte[] { 10, 0, 0, 3 }, -3)]
+		[TestCase(new byte[] { 10, 0, 0, 0 }, new byte[] { 10, 0, 0, 4 }, -4)]
+		[TestCase(new byte[] { 10, 0, 0, 255 }, new byte[] { 10, 0, 1, 0 }, -1)]
+		[TestCase(new byte[] { 10, 0, 255, 255 }, new byte[] { 10, 1, 0, 0 }, -1)]
+		[TestCase(new byte[] { 10, 255, 255, 255 }, new byte[] { 11, 0, 0, 0 }, -1)]
+		[TestCase(new byte[] { 255, 255, 255, 255 }, new byte[] { 0, 0, 0, 0 }, uint.MaxValue)]
+		public void Minus(byte[] left, byte[] right, long result) {
+			var leftIp = new CalculatableIPAddress(left);
+			var rightIp = new CalculatableIPAddress(right);
+			Assert.AreEqual(result, leftIp - rightIp);
+		}
+
 		/// <summary>
 		/// & Test
 		/// </summary>
@@ -146,6 +175,26 @@ namespace SandBeige {
 			var rightIp = new CalculatableIPAddress(right);
 			Assert.AreEqual(result, leftIp > rightIp);
 			Assert.AreEqual(result, rightIp < leftIp);
+		}
+		
+		/// <summary>
+		 /// >= Test
+		 /// </summary>
+		 /// <param name="left"></param>
+		 /// <param name="right"></param>
+		 /// <param name="result"></param>
+		[TestCase(new byte[] { 128, 0, 0, 0 }, new byte[] { 128, 0, 0, 0 }, true)]
+		[TestCase(new byte[] { 128, 0, 0, 0 }, new byte[] { 128, 0, 0, 1 }, false)]
+		[TestCase(new byte[] { 128, 0, 0, 1 }, new byte[] { 128, 0, 0, 0 }, true)]
+		[TestCase(new byte[] { 128, 0, 1, 0 }, new byte[] { 128, 0, 0, 255 }, true)]
+		[TestCase(new byte[] { 128, 1, 0, 0 }, new byte[] { 128, 0, 255, 0 }, true)]
+		[TestCase(new byte[] { 129, 0, 0, 0 }, new byte[] { 128, 255, 0, 0 }, true)]
+		[TestCase(new byte[] { 0, 0, 0, 0 }, new byte[] { 255, 0, 0, 0 }, false)]
+		public void ThanEqual(byte[] left, byte[] right, bool result) {
+			var leftIp = new CalculatableIPAddress(left);
+			var rightIp = new CalculatableIPAddress(right);
+			Assert.AreEqual(result, leftIp >= rightIp);
+			Assert.AreEqual(result, rightIp <= leftIp);
 		}
 	}
 }
