@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace SandBeige {
 
@@ -195,6 +196,38 @@ namespace SandBeige {
 			var rightIp = new CalculatableIPAddress(right);
 			Assert.AreEqual(result, leftIp >= rightIp);
 			Assert.AreEqual(result, rightIp <= leftIp);
+		}
+
+		[Test]
+		public void Null() {
+			var ci = new CalculatableIPAddress(new byte[] { 0, 0, 0, 0 });
+			CalculatableIPAddress nullCi = null;
+			Assert.AreEqual(null, nullCi + 1);
+			Assert.AreEqual(null, nullCi - 1);
+			Assert.AreEqual(null, nullCi++);
+			Assert.AreEqual(null, nullCi--);
+			Assert.AreEqual(null, nullCi - ci);
+			Assert.AreEqual(null, ci - nullCi);
+			Assert.AreEqual(false, nullCi > ci);
+			Assert.AreEqual(false, ci > nullCi);
+			Assert.AreEqual(false, nullCi < ci);
+			Assert.AreEqual(false, ci < nullCi);
+			Assert.AreEqual(false, nullCi >= ci);
+			Assert.AreEqual(false, ci >= nullCi);
+			Assert.AreEqual(false, nullCi <= ci);
+			Assert.AreEqual(false, ci <= nullCi);
+			Assert.AreEqual(false, nullCi == ci);
+			Assert.AreEqual(false, ci == nullCi);
+			Assert.AreEqual(true, null == nullCi);
+			Assert.AreEqual(true, nullCi == null);
+			Assert.AreEqual(false, nullCi != ci);
+			Assert.AreEqual(false, ci != nullCi);
+			Assert.AreEqual(null, nullCi & ci);
+			Assert.AreEqual(null, ci & nullCi);
+			Assert.AreEqual(null, nullCi | ci);
+			Assert.AreEqual(null, ci | nullCi);
+			Assert.AreEqual(null, nullCi ^ ci);
+			Assert.AreEqual(null, ci ^ nullCi);
 		}
 	}
 }

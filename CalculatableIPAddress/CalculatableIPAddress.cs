@@ -24,38 +24,63 @@ namespace SandBeige {
 		}
 
 		public static bool operator >(CalculatableIPAddress left, CalculatableIPAddress right) {
+			if (left == null || right == null) {
+				return false;
+			}
 			var leftReverseUintIp = BitConverter.ToUInt32(left.GetAddressBytes().Reverse().ToArray(), 0);
 			var rightReverseUintIp = BitConverter.ToUInt32(right.GetAddressBytes().Reverse().ToArray(), 0);
 			return leftReverseUintIp > rightReverseUintIp;
 		}
 		public static bool operator <(CalculatableIPAddress left, CalculatableIPAddress right) {
+			if (left == null || right == null) {
+				return false;
+			}
 			var leftReverseUintIp = BitConverter.ToUInt32(left.GetAddressBytes().Reverse().ToArray(), 0);
 			var rightReverseUintIp = BitConverter.ToUInt32(right.GetAddressBytes().Reverse().ToArray(), 0);
 			return leftReverseUintIp < rightReverseUintIp;
 		}
 		public static bool operator ==(CalculatableIPAddress left, CalculatableIPAddress right) {
+			if(ReferenceEquals(left,right)) {
+				return true;
+			}
+			if (ReferenceEquals(left, null) || ReferenceEquals(right, null)) {
+				return false;
+			}
+
 			var leftReverseUintIp = BitConverter.ToUInt32(left.GetAddressBytes().Reverse().ToArray(), 0);
 			var rightReverseUintIp = BitConverter.ToUInt32(right.GetAddressBytes().Reverse().ToArray(), 0);
 			return leftReverseUintIp == rightReverseUintIp;
 		}
 		public static bool operator !=(CalculatableIPAddress left, CalculatableIPAddress right) {
+			if (left == null || right == null) {
+				return false;
+			}
 			var leftReverseUintIp = BitConverter.ToUInt32(left.GetAddressBytes().Reverse().ToArray(), 0);
 			var rightReverseUintIp = BitConverter.ToUInt32(right.GetAddressBytes().Reverse().ToArray(), 0);
 			return leftReverseUintIp != rightReverseUintIp;
 		}
 
 		public static bool operator >=(CalculatableIPAddress left, CalculatableIPAddress right) {
+			if (left == null || right == null) {
+				return false;
+			}
 			var leftReverseUintIp = BitConverter.ToUInt32(left.GetAddressBytes().Reverse().ToArray(), 0);
 			var rightReverseUintIp = BitConverter.ToUInt32(right.GetAddressBytes().Reverse().ToArray(), 0);
 			return leftReverseUintIp >= rightReverseUintIp;
 		}
 		public static bool operator <=(CalculatableIPAddress left, CalculatableIPAddress right) {
+			if (left == null || right == null) {
+				return false;
+			}
 			var leftReverseUintIp = BitConverter.ToUInt32(left.GetAddressBytes().Reverse().ToArray(), 0);
 			var rightReverseUintIp = BitConverter.ToUInt32(right.GetAddressBytes().Reverse().ToArray(), 0);
 			return leftReverseUintIp <= rightReverseUintIp;
 		}
 
 		public static CalculatableIPAddress operator &(CalculatableIPAddress address, CalculatableIPAddress mask) {
+			if (address == null || mask == null) {
+				return null;
+			}
 			var byteArrayIp = address.GetAddressBytes();
 			var byteArrayMask = mask.GetAddressBytes();
 			var resultBit = byteArrayIp.Select((x, i) =>
@@ -65,6 +90,9 @@ namespace SandBeige {
 		}
 
 		public static CalculatableIPAddress operator |(CalculatableIPAddress address, CalculatableIPAddress mask) {
+			if (address == null || mask == null) {
+				return null;
+			}
 			var byteArrayIp = address.GetAddressBytes();
 			var byteArrayMask = mask.GetAddressBytes();
 			var resultBit = byteArrayIp.Select((x, i) => (byte)(x | byteArrayMask[i]));
@@ -72,6 +100,9 @@ namespace SandBeige {
 		}
 
 		public static CalculatableIPAddress operator ^(CalculatableIPAddress address, CalculatableIPAddress mask) {
+			if (address == null || mask == null) {
+				return null;
+			}
 			var byteArrayIp = address.GetAddressBytes();
 			var byteArrayMask = mask.GetAddressBytes();
 			var resultBit = byteArrayIp.Select((x, i) => (byte)(x ^ byteArrayMask[i]));
@@ -79,6 +110,9 @@ namespace SandBeige {
 		}
 
 		public static CalculatableIPAddress operator +(CalculatableIPAddress address, int right) {
+			if (address == null) {
+				return null;
+			}
 			var reverseUintIp = BitConverter.ToUInt32(address.GetAddressBytes().Reverse().ToArray(), 0);
 			var calculatedReverseByteArrayIp = BitConverter.GetBytes((uint)(reverseUintIp + right));
 			var calculatedByteArrayIp = calculatedReverseByteArrayIp.Reverse().ToArray();
@@ -90,6 +124,9 @@ namespace SandBeige {
 		}
 
 		public static CalculatableIPAddress operator -(CalculatableIPAddress address, int right) {
+			if (address == null) {
+				return null;
+			}
 			var reverseUintIp = BitConverter.ToUInt32(address.GetAddressBytes().Reverse().ToArray(), 0);
 			var calculatedReverseByteArrayIp = BitConverter.GetBytes((uint)(reverseUintIp - right));
 			var calculatedByteArrayIp = calculatedReverseByteArrayIp.Reverse().ToArray();
@@ -99,7 +136,10 @@ namespace SandBeige {
 			return address - 1;
 		}
 
-		public static long operator -(CalculatableIPAddress left, CalculatableIPAddress right) {
+		public static long? operator -(CalculatableIPAddress left, CalculatableIPAddress right) {
+			if (left == null || right == null) {
+				return null;
+			}
 			var leftReverseUintIp = BitConverter.ToUInt32(left.GetAddressBytes().Reverse().ToArray(), 0);
 			var rightReverseUintIp = BitConverter.ToUInt32(right.GetAddressBytes().Reverse().ToArray(), 0);
 
